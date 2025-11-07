@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 
-const busesController = require('../controllers/busesController.ts');
+const busesController = require('../controllers/busesController');
 
 router.get('/:stationId', busesController.getBuses);
 

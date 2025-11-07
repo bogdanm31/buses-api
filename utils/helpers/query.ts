@@ -46,7 +46,15 @@ const busesQuery = (stationId: string) => `
 }
 `;
 
+const stationsQuery = () => `{
+  stations {
+    gtfsId
+    name
+  }
+}`;
+
 module.exports = {
   serializeBuses,
-  busesQuery
+  busesQuery,
+  stationsQuery
 };

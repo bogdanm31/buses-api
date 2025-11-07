@@ -1,4 +1,4 @@
-const { busesQuery, serializeBuses } = require("../utils/helpers/buses.ts");
+const { busesQuery, serializeBuses } = require("../utils/helpers/query");
 const apiClient = require('../lib/apiClient.ts');
 
 const getBuses = async (req: any, res: any) => {

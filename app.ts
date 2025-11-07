@@ -7,6 +7,7 @@ app.use(cors('*'));
 app.use(express.json());
 
 // defining routes
+app.use('/stations', require('./routes/stations.ts'));
 app.use('/buses', require('./routes/buses.ts'));
 
 // starting server

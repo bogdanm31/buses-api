@@ -1,4 +1,4 @@
-const { stationsQuery } = require("../utils/helpers/query");
+const { stationsQuery, stationStopsQuery } = require("../utils/helpers/query");
 const apiClient = require('../lib/apiClient');
 
 const getStations = async (_, res) => {
@@ -9,8 +9,10 @@ const getStations = async (_, res) => {
         throw new Error('Could not retrieve data!');
       }
       
-      const stations = data.stations.map(({ gtfsId, name }) => ({ id: gtfsId, name }));
-      res.json({ data: stations });
+      res.json({
+        data: data.stations,
+        success: true
+      });
     }).catch(() => {
       res.json({
         data: [],
@@ -19,6 +21,28 @@ const getStations = async (_, res) => {
     });
 }
 
+const getStationStops = async (req, res) => {
+  await apiClient.post('', { query: stationStopsQuery(req.params.stationId) })
+    .then(response => {
+      const { data } = response.data;
+      if(!(data && data.stations)) {
+        throw new Error('Could not retrieve data!');
+      }
+      
+      res.json({
+        data: data.stations[0],
+        success: true
+      });
+    }).catch((error) => {
+      res.json({
+        data: [],
+        success: false,
+        error
+      });
+    });
+}
+
 module.exports = {
-  getStations
+  getStations,
+  getStationStops
 };

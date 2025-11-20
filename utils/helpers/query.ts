@@ -1,18 +1,37 @@
+const stationsQuery = () => `{
+  stations {
+    id: gtfsId
+    name
+  }
+}`;
+
+const stationStopsQuery = (stationId: string) => `{
+  stations(ids: "${stationId}") {
+    id: gtfsId
+    name
+    stops {
+      id: gtfsId
+      name
+    }
+  }
+}`;
+
 const serializeBuses = (data: any) => {
   const {
     stop: { id, name, stoptimesWithoutPatterns: buses }
   } = data;
   
   return {
-    station: { id, name },
+    id,
+    name,
     buses: buses.map((bus: any) => {
       const {
-        arrivalDelay: delay,
-        realtimeArrival: arrival,
+        delay,
+        arrival,
         serviceDay,
         trip: {
-          id: tripId,
-          route: { shortName: name }
+          tripId,
+          route: { name }
         }
       } = bus;
       return {
@@ -26,35 +45,29 @@ const serializeBuses = (data: any) => {
   }
 };
 
-const busesQuery = (stationId: string) => `
+const stopBusesQuery = (stopId: string) => `
 {
-  stop(id: "${stationId}") {
-    id
+  stop(id: "${stopId}") {
+    id: gtfsId
     name
     stoptimesWithoutPatterns {
       trip {
-        id
+        tripId: gtfsId
         route {
-          shortName
+          name: shortName
         }
       }
-      realtimeArrival
-      arrivalDelay
+      arrival: realtimeArrival
+      delay: arrivalDelay
       serviceDay
     }
   }
 }
 `;
 
-const stationsQuery = () => `{
-  stations {
-    gtfsId
-    name
-  }
-}`;
-
 module.exports = {
+  stationsQuery,
+  stationStopsQuery,
   serializeBuses,
-  busesQuery,
-  stationsQuery
+  stopBusesQuery,
 };

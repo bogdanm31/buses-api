@@ -1,8 +1,8 @@
-const { busesQuery, serializeBuses } = require("../utils/helpers/query");
+const { stopBusesQuery, serializeBuses } = require("../utils/helpers/query");
 const apiClient = require('../lib/apiClient.ts');
 
-const getBuses = async (req: any, res: any) => {
-  await apiClient.post('', { query: busesQuery(req.params.stationId) })
+const getStopBuses = async (req: any, res: any) => {
+  await apiClient.post('', { query: stopBusesQuery(req.params.stopId) })
     .then((response) => {
       const { data } = response.data;
       if(!(data && data.stop)) {
@@ -22,5 +22,5 @@ const getBuses = async (req: any, res: any) => {
 };
 
 module.exports = {
-  getBuses
+  getStopBuses
 };

@@ -1,8 +1,12 @@
 const { Router } = require('express');
 const router = Router();
 
-const stationsController = require('../controllers/stationsController');
+const {
+  getStations,
+  getStationStops
+} = require('../controllers/stationsController');
 
-router.get('/', stationsController.getStations);
+router.get('/', getStations);
+router.get('/:stationId', getStationStops);
 
 module.exports = router;

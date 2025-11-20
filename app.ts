@@ -8,7 +8,7 @@ app.use(express.json());
 
 // defining routes
 app.use('/stations', require('./routes/stations'));
-app.use('/buses', require('./routes/buses'));
+app.use('/stops', require('./routes/stops'));
 
 // starting server
 app.listen(PORT, () => {
